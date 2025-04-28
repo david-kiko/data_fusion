@@ -1,0 +1,50 @@
+{
+	"job": {
+		"setting": {
+			"speed": {
+				"channel": 1
+			}
+		},
+		"content": [{
+			"reader": {
+				"name": "txtfilereader",
+				"parameter": {
+					"path": ["/tmp/data/${instanceId}"],
+					"encoding": "UTF-8",
+					"column": [{
+							"index": 0,
+							"type": "long"
+						},
+						{
+							"index": 1,
+							"type": "long"
+						},
+						{
+							"index": 2,
+							"type": "string"
+						}
+					],
+					"fieldDelimiter": ","
+				}
+			},
+			"writer": {
+				"name": "postgresqlwriter",
+				"parameter": {
+					"username": "root",
+					"password": "root",
+					"column": [
+						"instance_id",
+						"cid",
+						"cname"
+					],
+					"connection": [{
+						"jdbcUrl": "jdbc:postgresql://dolphinscheduler-postgresql:5432/api",
+						"table": [
+							"public.origin_data"
+						]
+					}]
+				}
+			}
+		}]
+	}
+}

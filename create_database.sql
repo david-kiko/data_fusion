@@ -23,3 +23,17 @@ CREATE TABLE public.output_post (
     CNAME varchar(255),
     create_time timestamp DEFAULT CURRENT_TIMESTAMP
 ); 
+
+CREATE TABLE public.origin_data (
+    INSTANCE_ID bigint,
+    CID bigint,
+    CNAME varchar(255),
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP
+); 
+
+CREATE TABLE public.origin_tmp (
+    INSTANCE_ID bigint,
+    CID bigint,
+    CNAME varchar(255),
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP
+); 
