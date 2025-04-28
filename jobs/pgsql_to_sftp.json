@@ -1,0 +1,52 @@
+{
+    "job": {
+      "setting": {
+        "speed": {
+          "channel": 1
+        }
+      },
+      "content": [
+        {
+          "reader": {
+            "name": "postgresqlreader",
+            "parameter": {
+              "username": "root",
+              "password": "root",
+              "connection": [
+                {
+                  "querySql": [
+                    "SELECT \n    INSTANCE_ID,\n    CID,\n    CASE \n        WHEN CNAME LIKE '%机翼%' THEN CONCAT('机翼工艺_', REGEXP_REPLACE(CNAME, '.*工艺[_-]?([0-9]+).*', '\\1'))\n        WHEN CNAME LIKE '%装配%' THEN CONCAT('装配工艺_', REGEXP_REPLACE(CNAME, '.*工艺[_-]?([0-9]+).*', '\\1'))\n        WHEN CNAME LIKE '%大修%' THEN CONCAT('大修工艺_', REGEXP_REPLACE(CNAME, '.*工艺[_-]?([0-9]+).*', '\\1'))\n        ELSE CNAME\n    END as CNAME\nFROM public.origin_data where instance_id = ${instanceId}"
+                  ],
+                  "jdbcUrl": [
+                    "jdbc:postgresql://dolphinscheduler-postgresql:5432/api"
+                  ]
+                }
+              ]
+            }
+          },
+          "writer": {
+            "name": "ftpwriter",
+            "parameter": {
+              "protocol": "sftp",
+              "host": "192.168.248.163",
+              "port": 2222,
+              "username": "admin",
+              "password": "admin",
+              "path": "/upload",
+              "fileName": "data_${instanceId}.txt",
+              "writeMode": "append",
+              "fileFormat": "csv",
+              "encoding": "utf-8",
+              "fieldDelimiter": ",",
+              "nullFormat": "\\N",
+              "dateFormat": "yyyy-MM-dd HH:mm:ss",
+              "header": [
+                "cid",
+                "cname"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }

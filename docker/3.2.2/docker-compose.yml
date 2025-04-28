@@ -39,9 +39,7 @@ services:
     ports:
       - "2222:22"
     profiles: ["all"]
-    volumes:
-      - dolphinscheduler-resource-local:/home/sftpuser/upload
-    command: sftpuser:sftppass:1001
+    command: admin:admin:::upload
     networks:
       - dolphinscheduler
 
