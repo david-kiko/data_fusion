@@ -1,0 +1,48 @@
+{
+	"job": {
+		"setting": {
+			"speed": {
+				"channel": 1
+			}
+		},
+		"content": [{
+			"reader": {
+				"name": "httpreader",
+				"parameter": {
+					"connection": {
+						"url": "http://192.168.30.231:18081/api/post_data"
+					},
+					"reqParams": {},
+					"isPage": false,
+					"resultKey": "result.data",
+					"method": "POST",
+					"column": ["cid", "cname"],
+					"headers": {
+						"Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3NDU4MDM1OTcsImV4cCI6MTc3NzMzOTU5N30.7c4aLqlBgbXPBC8lk0W3o6asuxqZ4Rb5vS0zUF1Nd-qrGmd8849FXcBgmA4L4gy1"
+					}
+				}
+			},
+			"writer": {
+				"name": "postgresqlwriter",
+				"parameter": {
+					"username": "root",
+					"password": "root",
+					"column": [
+						"cid",
+						"cname"
+					],
+					"connection": [{
+						"jdbcUrl": "jdbc:postgresql://dolphinscheduler-postgresql:5432/api",
+						"table": [
+							"public.output_post"
+						]
+					}],
+					"preSql": [
+						"truncate table public.output_post"
+					],
+					"postSql": []
+				}
+			}
+		}]
+	}
+}

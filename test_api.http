@@ -1,0 +1,20 @@
+### Test GET endpoint with Basic Auth (username: admin, password: nimda)
+GET http://localhost:8080/api/get_data?page=0&size=10
+Authorization: Basic YWRtaW46bmltZGE=
+
+### Test POST endpoint with JWT token
+POST http://localhost:8080/api/post_data
+Authorization: Bearer {{jwt_token}}
+
+### Get JWT token for POST endpoint
+# @name login
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "nimda"
+}
+
+### Set JWT token
+@jwt_token = {{login.response.body.result.data}} 
